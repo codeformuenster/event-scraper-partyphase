@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  scraper:
+    build:
+      context: ./scraper
+    command: ruby scraper_partyphase.rb /data/events.jsonl
+    volumes:
+      - data:/data
+
+  pipeline:
+    build:
+      context: ./pipeline
+    working_dir: /scripts
+    command: python /scripts/hashid-location.py
+    volumes:
+      - data:/data
+
+volumes:
+  data:
